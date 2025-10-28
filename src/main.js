@@ -2,27 +2,24 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-// ===== HERO INTRO =====
-window.addEventListener("load", () => {
-  gsap.to("#title", { opacity: 1, y: -10, duration: 0.8 });
-  gsap.to("#subtitle", { opacity: 1, y: -10, duration: 0.8, delay: 0.2 });
-  gsap.to("#ctaBtn", { opacity: 1, y: 0, duration: 0.8, delay: 0.4 });
-});
-
-// ===== PERFORMANCE SAFE ANIMATIONS =====
 const isDesktop = window.innerWidth > 768;
 
-// Мягкая подсветка сетки — только на десктопе
-if (isDesktop) {
-  const paths = document.querySelectorAll("svg path");
-  gsap.to(paths, {
-    strokeOpacity: 0.3,
-    repeat: -1,
-    yoyo: true,
-    ease: "power1.inOut",
-    duration: 3,
-  });
-}
+// ===== HERO INTRO =====
+window.addEventListener("load", async () => {
+  await document.fonts.ready;
+
+  if (isDesktop) {
+    gsap.to("#title", { opacity: 1, y: -10, duration: 0.8 });
+    gsap.to("#subtitle", { opacity: 1, y: -10, duration: 0.8, delay: 0.2 });
+    gsap.to("#ctaBtn", { opacity: 1, y: 0, duration: 0.8, delay: 0.4 });
+    gsap.to("#howBtn", { opacity: 1, y: 0, duration: 0.8, delay: 0.6 }); // добавлено
+  } else {
+    document.querySelectorAll("#title, #subtitle, #ctaBtn, #howBtn").forEach(el => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+  }
+});
 
 // ===== SCROLL REVEALS =====
 if (isDesktop) {
